@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import moment from 'moment';
+import axios from "../api/axios";
 
 export const Employee = () => {
 
@@ -13,14 +14,12 @@ export const Employee = () => {
     const [employeePhotoFileName, setEmployeePhotoFileName] = useState('anonymous.jpg');
 
     const refreshList = () => {
-        fetch(process.env.REACT_APP_API_URL + 'employee')
-        .then(response => response.json())
-        .then(data => setEmployees(data))
+        axios.get(process.env.REACT_APP_API_URL + 'employee')
+        .then(response => setEmployees(response.data))
         .catch(error => console.log("Error fetching data:", error))
 
-        fetch(process.env.REACT_APP_API_URL + 'department')
-        .then(response => response.json())
-        .then(data => setDepartments(data))
+        axios.get(process.env.REACT_APP_API_URL + 'department')
+        .then(response => setDepartments(response.data))
         .catch(error => console.log("Error fetching data:", error))
     }
 
@@ -47,60 +46,37 @@ export const Employee = () => {
     };
 
     const addEmployee = () => {
-        fetch(process.env.REACT_APP_API_URL + 'employee', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+        axios.post(process.env.REACT_APP_API_URL + 'employee', {
                 EmployeeName: employeeName,
                 Department: employeeDepartment,
                 DateOfJoining: employeeDateOfJoining,
                 PhotoFileName: employeePhotoFileName
             })
-        })
-        .then(response => response.json())
-        .then(result => {
-            alert('Success')
-            refreshList();
-        })
-        .catch(error => alert('Failed'));
+            .then(result => {
+                alert('Success')
+                refreshList();
+            })
+            .catch(error => alert('Failed'));
     }
 
     const editEmployee = () => {
-        fetch(process.env.REACT_APP_API_URL + 'employee', {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+        axios.put(process.env.REACT_APP_API_URL + 'employee', {
                 EmployeeId: employeeId,
                 EmployeeName: employeeName,
                 Department: employeeDepartment,
                 DateOfJoining: employeeDateOfJoining,
                 PhotoFileName: employeePhotoFileName
             })
-        })
-        .then(response => response.json())
-        .then(result => {
-            alert('Success')
-            refreshList();
-        })
-        .catch(error => alert('Failed'));
+            .then(response => {
+                alert('Success')
+                refreshList();
+            })
+            .catch(error => alert('Failed'));
     }
 
     const deleteEmployee = (id) => {
-        fetch(process.env.REACT_APP_API_URL + 'employee/' + id, {
-            method: 'DELETE',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(response => response.json())
-        .then(result => {
+        axios.delete(process.env.REACT_APP_API_URL + 'employee/' + id)
+        .then(response => {
             alert('Success')
             refreshList();
         })
@@ -114,17 +90,14 @@ export const Employee = () => {
             return;
 
         const formData = new FormData();
-        formData.append("file", e.target.files[0], e.target.files[0].name);
+        formData.append("postedFile", e.target.files[0], e.target.files[0].name);
 
-        fetch(process.env.REACT_APP_API_URL + 'employee/savefile', {
-            method: 'POST',
-            body: formData,
+        axios.post('employee/savefile', formData, {
             headers: {
-                'Accept': 'application/json',
-            },
+              'Content-Type': 'multipart/form-data'
+            }
         })
-        .then(response => response.json())
-        .then(res => setEmployeePhotoFileName(res))
+        .then(response => setEmployeePhotoFileName(response.data))
         .catch(error => alert('Failed ' + error));
     }
 

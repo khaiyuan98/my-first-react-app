@@ -1,44 +1,49 @@
 import logo from './logo.svg';
 import './App.css';
-import {BrowserRouter, Route, Routes, NavLink} from 'react-router-dom';
-import {Home} from './components/Home';
-import {Department} from './components/Department';
-import {Employee} from './components/Employee';
+import {TopNavBar} from './components/TopNavBar';
+import axios from './api/axios';
+import { useEffect, useState } from 'react';
+import { Login } from './pages/Login';
 
 function App() {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (localStorage['accessToken'] != null) {
+      axios.interceptors.request.use(
+        config => {
+          // Retrieve the token from your authentication storage (localStorage, cookies, etc.)
+          const token = localStorage.getItem('accessToken');
+      
+          // Add the authorization header if the token exists
+          if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+          }
+          return config;
+        },
+        error => {
+          return Promise.reject(error);
+        });
+
+        axios.get('/auth/user')
+        .then(response => {
+            setUser(response.data);
+        });     
+    }
+  },[]);
+
+  if (user == null)
+  {
+    return <div className="App container">
+      return <Login setUser={setUser}/>
+    </div>
+  }
+
   return (
-    <BrowserRouter>
-      <div className="App container">
-        <h3 className="d-flex justify-content-center m-3">
-          React JS Frontend
-        </h3>
-        <nav className="navbar navbar-expand-sm bg-light navbar-dark">
-          <ul className="navbar-nav">
-            <li className="nav-item- m-1">
-              <NavLink className="btn btn-light btn-outline-primary" to="/home">
-                Home
-              </NavLink>
-            </li>
-            <li className="nav-item- m-1">
-              <NavLink className="btn btn-light btn-outline-primary" to="/employee">
-                Employee
-              </NavLink>
-            </li>
-            <li className="nav-item- m-1">
-              <NavLink className="btn btn-light btn-outline-primary" to="/department">
-                Department
-              </NavLink>
-            </li>
-          </ul>
-        </nav>
-        
-        <Routes>
-          <Route path='/home' element={<Home/>}/>
-          <Route path='/employee' element={<Employee/>}/>
-          <Route path='/department' element={<Department/>}/>
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <div>
+      <TopNavBar user={user} setUser={setUser}/>
+    </div>
   );
 }
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "../api/axios";
 
 
 export const Department = () => {
@@ -15,10 +16,9 @@ export const Department = () => {
     const refreshList = () => {
         setIsLoading(true);
 
-        fetch(process.env.REACT_APP_API_URL + 'department')
-        .then(response => response.json())
-        .then(data => {
-            setDepartments(data);
+        axios.get('department')
+        .then(response => {
+            setDepartments(response.data);
             setIsLoading(false);
         })
         .catch(error => console.log("Error fetching data:", error))
@@ -41,54 +41,31 @@ export const Department = () => {
     };
 
     const addDepartment = () => {
-        fetch(process.env.REACT_APP_API_URL + 'department', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+        axios.post('department', {
                 DepartmentName: departmentName
             })
-        })
-        .then(response => response.json())
-        .then(result => {
-            alert('Success')
-            refreshList();
+            .then(response => {
+                alert('Success')
+                refreshList();
         })
         .catch(error => alert('Failed'));
     }
 
     const editDepartment = () => {
-        fetch(process.env.REACT_APP_API_URL + 'department', {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+        axios.put('department', {
                 DepartmentId: departmentId,
                 DepartmentName: departmentName
             })
-        })
-        .then(response => response.json())
-        .then(result => {
-            alert('Success')
-            refreshList();
-        })
-        .catch(error => alert('Failed'));
+            .then(response => {
+                alert('Success')
+                refreshList();
+            })
+            .catch(error => alert('Failed'));
     }
 
     const deleteDepartment = (id) => {
-        fetch(process.env.REACT_APP_API_URL + 'department/' + id, {
-            method: 'DELETE',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(response => response.json())
-        .then(result => {
+        axios.delete('department/' + id)
+        .then(response => {
             alert('Success')
             refreshList();
         })
