@@ -4,11 +4,12 @@ import {Department} from '../pages/Department';
 import {Employee} from '../pages/Employee';
 import { Login } from '../pages/Login';
 import { Register } from '../pages/Register';
+import axios from '../api/axios';
 
 export const TopNavBar = (props) => {
 
     const logout = () => {
-        localStorage.removeItem('accessToken');
+        axios.post('/auth/logout', {}, {withCredentials: true})
         props.setAuthenticated(false);
     }
 
@@ -87,7 +88,7 @@ export const TopNavBar = (props) => {
         </nav>
         <div className="App container">
             <Routes>
-                <Route path='/' exact element={<Home user={props.user}/>}/>
+                <Route path='/' exact element={<Home/>}/>
                 <Route path='/register' element={<Register/>}/>
                 <Route path='/employee' element={<Employee/>}/>
                 <Route path='/department' element={<Department/>}/>

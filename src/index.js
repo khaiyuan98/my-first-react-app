@@ -4,9 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Bootstrap CSS
+import "bootstrap/dist/css/bootstrap.min.css";
+// Bootstrap Bundle JS
+import "bootstrap/dist/js/bootstrap.bundle.min";
+
+// Moment
 import moment from 'moment';
 import 'moment/locale/en-gb';
 moment.locale('en-gb');
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

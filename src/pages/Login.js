@@ -15,9 +15,9 @@ export const Login = (props) => {
         axios.post('/auth/login', {
             username: username,
             password: password,
-        })
+        }, {withCredentials: true})
         .then(response => {
-            localStorage.setItem("accessToken", response.data);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data}`
             props.setAuthenticated(true);
             // setRedirect(true);
 

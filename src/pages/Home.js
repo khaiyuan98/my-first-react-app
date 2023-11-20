@@ -1,8 +1,20 @@
-export const Home = (props) => {
-    console.log(props.user)
+import { useEffect, useState } from "react";
+import axios from "../api/axios";
+
+export const Home = () => {
+    const [user, setUser] = useState(null);
+
+
+    useEffect(() => {
+        axios.get('/auth/user').then(() => {
+            setUser(user);
+        });
+    }, []);
+
+
     return (
     <div>
-        {props.user?.Username ? `Hi ${props.user.Username}` : 'You are not logged in'}
+        {user?.Username ? `Hi ${user.Username}` : 'You are not logged in'}
     </div>
     )
 };
