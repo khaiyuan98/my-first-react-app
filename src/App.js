@@ -8,9 +8,14 @@ import { Login } from './pages/Login';
 function App() {
 
   const [user, setUser] = useState(null);
+  const [isAuthenticated, setAuthenticated] = useState(localStorage['accessToken'] != null);
 
   useEffect(() => {
-    if (localStorage['accessToken'] != null) {
+    setCurrentUser();
+  },[isAuthenticated]);
+
+  const setCurrentUser = () => {
+    if (isAuthenticated) {
       axios.interceptors.request.use(
         config => {
           // Retrieve the token from your authentication storage (localStorage, cookies, etc.)
@@ -31,18 +36,23 @@ function App() {
             setUser(response.data);
         });     
     }
-  },[]);
+    else {
+      setUser(null);
+    }
+  };
 
   if (user == null)
   {
-    return <div className="App container">
-      return <Login setUser={setUser}/>
+    return (
+    <div className="App container">
+       <Login setAuthenticated={setAuthenticated}/>
     </div>
+    );
   }
 
   return (
     <div>
-      <TopNavBar user={user} setUser={setUser}/>
+      <TopNavBar user={user} setAuthenticated={setAuthenticated}/>
     </div>
   );
 }

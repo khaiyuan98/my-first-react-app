@@ -18,30 +18,9 @@ export const Login = (props) => {
         })
         .then(response => {
             localStorage.setItem("accessToken", response.data);
+            props.setAuthenticated(true);
+            // setRedirect(true);
 
-            axios.interceptors.request.use(
-                config => {
-                  // Retrieve the token from your authentication storage (localStorage, cookies, etc.)
-                  const token = response.data;
-              
-                  // Add the authorization header if the token exists
-                  if (token) {
-                    config.headers.Authorization = `Bearer ${token}`;
-                  }
-              
-                  return config;
-                },
-                error => {
-                  return Promise.reject(error);
-                }
-            );
-
-        }).then(response => {
-            axios.get('/auth/user')
-            .then(response => {
-                props.setUser(response.data);
-                // setRedirect(true);
-            });  
         })
         .catch(function (error) {
             if (error.response.status === 401) {
@@ -49,7 +28,7 @@ export const Login = (props) => {
             }
             else
             {
-                alert('Server error')
+                alert('Server error');
             }
         });
     };
@@ -64,16 +43,16 @@ export const Login = (props) => {
 
             <div className="form-floating">
             <input type="text" className="form-control" id="floatingInput" placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
-            <label for="floatingInput">Username</label>
+            <label htmlFor="floatingInput">Username</label>
             </div>
             <div className="form-floating">
             <input type="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
-            <label for="floatingPassword">Password</label>
+            <label htmlFor="floatingPassword">Password</label>
             </div>
 
             <div className="form-check text-start my-3">
             <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault"/>
-            <label className="form-check-label" for="flexCheckDefault">
+            <label className="form-check-label" htmlFor="flexCheckDefault">
                 Remember me
             </label>
             </div>

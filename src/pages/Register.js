@@ -31,20 +31,20 @@ export const Register = () => {
 
             <div className="form-floating">
             <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={(e) => setEmail(e.target.value)}/>
-            <label for="floatingInput">Email address</label>
+            <label htmlFor="floatingInput">Email address</label>
             </div>
             <div className="form-floating">
             <input type="text" className="form-control" id="floatingInput" placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
-            <label for="floatingInput">Username</label>
+            <label htmlFor="floatingInput">Username</label>
             </div>
             <div className="form-floating">
             <input type="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
-            <label for="floatingPassword">Password</label>
+            <label htmlFor="floatingPassword">Password</label>
             </div>
 
             <div className="form-check text-start my-3">
             <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault"/>
-            <label className="form-check-label" for="flexCheckDefault">
+            <label className="form-check-label" htmlFor="flexCheckDefault">
                 Remember me
             </label>
             </div>

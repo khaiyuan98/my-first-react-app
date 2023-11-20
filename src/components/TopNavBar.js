@@ -9,7 +9,7 @@ export const TopNavBar = (props) => {
 
     const logout = () => {
         localStorage.removeItem('accessToken');
-        props.setUser(null);
+        props.setAuthenticated(false);
     }
 
     let leftMenu;
@@ -79,7 +79,7 @@ export const TopNavBar = (props) => {
         <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
             <div className="container-fluid">
                 <a className="navbar-brand">Demo</a>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     {leftMenu}
                 </div>
                 {rightMenu}
