@@ -10,6 +10,17 @@ function App() {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setAuthenticated] = useState(localStorage['accessToken'] != null);
 
+  // Remove access token if received error 401
+  axios.interceptors.response.use(
+    response => response,
+    error => {
+      if (error.response.status === 401) {
+        console.log('Logged out');
+        setAuthenticated(false);
+      }
+      throw error;
+    });
+
   useEffect(() => {
     setCurrentUser();
   },[isAuthenticated]);
@@ -34,27 +45,28 @@ function App() {
         axios.get('/auth/user')
         .then(response => {
             setUser(response.data);
-        });     
+        })
     }
     else {
+      localStorage.removeItem('accessToken');
       setUser(null);
     }
   };
 
-  if (user == null)
+  if (isAuthenticated)
   {
     return (
-    <div className="App container">
-       <Login setAuthenticated={setAuthenticated}/>
-    </div>
+      <div>
+        <TopNavBar user={user} setAuthenticated={setAuthenticated}/>
+      </div>
     );
   }
 
   return (
-    <div>
-      <TopNavBar user={user} setAuthenticated={setAuthenticated}/>
+    <div className="App container">
+       <Login setAuthenticated={setAuthenticated}/>
     </div>
-  );
+    );
 }
 
 export default App;

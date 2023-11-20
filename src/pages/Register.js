@@ -16,7 +16,7 @@ export const Register = () => {
             password: password,
             email: email
         }).then(response => {
-            alert('Success');
+            console.log('Success');
             setRedirect(true);
         });  
     };

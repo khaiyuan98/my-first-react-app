@@ -53,10 +53,10 @@ export const Employee = () => {
                 PhotoFileName: employeePhotoFileName
             })
             .then(result => {
-                alert('Success')
+                console.log('Success')
                 refreshList();
             })
-            .catch(error => alert('Failed'));
+            .catch(error => console.log('Failed'));
     }
 
     const editEmployee = () => {
@@ -68,19 +68,19 @@ export const Employee = () => {
                 PhotoFileName: employeePhotoFileName
             })
             .then(response => {
-                alert('Success')
+                console.log('Success')
                 refreshList();
             })
-            .catch(error => alert('Failed'));
+            .catch(error => console.log('Failed'));
     }
 
     const deleteEmployee = (id) => {
         axios.delete(process.env.REACT_APP_API_URL + 'employee/' + id)
         .then(response => {
-            alert('Success')
+            console.log('Success')
             refreshList();
         })
-        .catch(error => alert('Failed'));
+        .catch(error => console.log('Failed'));
     }
 
     const imageUpload = (e) => {
@@ -98,7 +98,7 @@ export const Employee = () => {
             }
         })
         .then(response => setEmployeePhotoFileName(response.data))
-        .catch(error => alert('Failed ' + error));
+        .catch(error => console.log('Failed ' + error));
     }
 
     var tableHtml = <h3>Loading Data...</h3>;

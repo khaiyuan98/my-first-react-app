@@ -45,10 +45,10 @@ export const Department = () => {
                 DepartmentName: departmentName
             })
             .then(response => {
-                alert('Success')
+                console.log('Success')
                 refreshList();
         })
-        .catch(error => alert('Failed'));
+        .catch(error => console.log('Failed'));
     }
 
     const editDepartment = () => {
@@ -57,19 +57,19 @@ export const Department = () => {
                 DepartmentName: departmentName
             })
             .then(response => {
-                alert('Success')
+                console.log('Success')
                 refreshList();
             })
-            .catch(error => alert('Failed'));
+            .catch(error => console.log('Failed'));
     }
 
     const deleteDepartment = (id) => {
         axios.delete('department/' + id)
         .then(response => {
-            alert('Success')
+            console.log('Success')
             refreshList();
         })
-        .catch(error => alert('Failed'));
+        .catch(error => console.log('Failed'));
     }
 
     const FilterFn = () => {

@@ -24,11 +24,11 @@ export const Login = (props) => {
         })
         .catch(function (error) {
             if (error.response.status === 401) {
-                alert('Invalid username or password');
+                console.log('Invalid username or password');
             }
             else
             {
-                alert('Server error');
+                console.log('Server error');
             }
         });
     };
