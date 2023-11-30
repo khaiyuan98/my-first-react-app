@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import moment from 'moment';
-import axios from "../api/axios";
+import axios from "../../api/axios";
 
 export const Employee = () => {
 

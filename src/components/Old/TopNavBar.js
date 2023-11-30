@@ -1,10 +1,10 @@
 import {BrowserRouter, Route, Routes, NavLink} from 'react-router-dom';
-import {Home} from '../pages/Home';
-import {Department} from '../pages/Department';
-import {Employee} from '../pages/Employee';
-import { Login } from '../pages/Login';
-import { Register } from '../pages/Register';
-import axios from '../api/axios';
+import {Home} from '../../pages/Old/Home';
+import {Department} from '../../pages/Old/Department';
+import {Employee} from '../../pages/Old/Employee';
+import { Login } from '../../pages/Old/Login';
+import { Register } from '../../pages/Old/Register';
+import axios from '../../api/axios';
 
 export const TopNavBar = (props) => {
 

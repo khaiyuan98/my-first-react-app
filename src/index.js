@@ -3,24 +3,24 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-// Bootstrap CSS
-import "bootstrap/dist/css/bootstrap.min.css";
-// Bootstrap Bundle JS
-import "bootstrap/dist/js/bootstrap.bundle.min";
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 // Moment
 import moment from 'moment';
 import 'moment/locale/en-gb';
+
 moment.locale('en-gb');
 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
