@@ -2,16 +2,9 @@
 
 import { configureStore } from '@reduxjs/toolkit'
 import darkModeReducer from './darkMode'
-import { apiSlice } from './apiSlice'
-import authReducer from './authSlice'
 
 export default configureStore({
   reducer: {
-    darkMode: darkModeReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer,
-    auth: authReducer
+    darkMode: darkModeReducer
   },
-  middleware: getDefaultMiddleware => 
-    getDefaultMiddleware().concat(apiSlice.middleware),
-  devTools: true
 })

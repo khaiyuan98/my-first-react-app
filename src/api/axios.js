@@ -1,7 +1,4 @@
-import defaultAxios from 'axios';
-
-let axios = defaultAxios.create();
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+import axios from 'axios';
 
 let refresh = false;
 
