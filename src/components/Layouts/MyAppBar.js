@@ -2,8 +2,7 @@ import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { MySettingsButton } from "./MySettingsButton";
 
-export const MyAppBar = ({ drawerWidth = 240, drawerIsOpen, setDrawerOpen}) => {
-
+export const MyAppBar = ({ drawerWidth = 240, drawerIsOpen, setDrawerOpen }) => {
     const handleMenuClick = () => {
         setDrawerOpen(!drawerIsOpen);
         console.log('Menu Clicked');
@@ -29,7 +28,7 @@ export const MyAppBar = ({ drawerWidth = 240, drawerIsOpen, setDrawerOpen}) => {
                 </Typography>
 
                 <Box sx={{ flexGrow: 1 }} />
-                <MySettingsButton/>
+                <MySettingsButton />
             </Toolbar>
         </AppBar>
     )

@@ -4,9 +4,11 @@ import {Department} from '../../pages/Old/Department';
 import {Employee} from '../../pages/Old/Employee';
 import { Login } from '../../pages/Old/Login';
 import { Register } from '../../pages/Old/Register';
-import axios from '../../api/axios';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 export const TopNavBar = (props) => {
+
+    const axios = useAxiosPrivate();
 
     const logout = () => {
         axios.post('/auth/logout', {}, {withCredentials: true})

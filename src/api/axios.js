@@ -1,26 +1,15 @@
 import axios from 'axios';
 
-let refresh = false;
+const BASE_URL = process.env.REACT_APP_API_URL;
 
-// Remove access token if received error 401
-axios.interceptors.response.use(
-    response => response,
-    async error => {
-        if (error.response.status === 401 && !refresh) {
-            refresh = true;
+export default axios.create({
+   baseURL: BASE_URL
+});
 
-            const response = await axios.post('/auth/refresh', {}, {withCredentials: true});
-
-            if (response.status === 200) {
-                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data}`;
-            }
-
-            return axios(error.config);
-        }
-        refresh = false;
-        return error;
-    });
-
-console.log('Base URL:', process.env.REACT_APP_API_URL);
-
-export default axios;
+export const axiosPrivate = axios.create({
+   baseURL: BASE_URL,
+   headers: {
+      'Content-Type': 'application/json',
+   },
+   withCredentials: true
+});

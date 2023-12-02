@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { MyAppBar } from "./MyAppBar";
 import { MyDrawer } from "./MyDrawer";
 import { useState } from "react";
-import { Paper } from "@mui/material";
 
 const drawerWidth = 240;
 

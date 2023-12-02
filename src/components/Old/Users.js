@@ -1,7 +1,9 @@
 import {useState} from 'react';
-import axios from '../../api/axios';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 export const Users = () => {
+    const axios = useAxiosPrivate();
+
     const [users, setUsers] = useState();
 
     useEffect(() => {

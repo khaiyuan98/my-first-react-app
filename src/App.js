@@ -1,6 +1,4 @@
 import './App.css';
-import axios from './api/axios';
-import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Create } from './pages/Create';
 import { Departments } from './pages/Departments';
@@ -9,27 +7,21 @@ import defaultTheme from './themes/theme';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { MyLayout } from './components/Layouts/MyLayout';
 import { useSelector } from 'react-redux';
+import { Unauthorized } from './pages/ErrorPages/Unauthorized';
+import RequireAuth from './components/RequireAuth';
+import { Login } from './pages/Login';
+import PersistLogin from './components/PersistLogin';
+import { PageNotFound } from './pages/ErrorPages/PageNotFound';
 
 
 function App() {
-
-  const [isAuthenticated, setAuthenticated] = useState(false);
+  const ROLES = {
+    'Creator': 100,
+    'Departments': 200
+  }
 
   // From redux
   const isDarkMode = useSelector(state => state.darkMode.isDarkMode);
-
-  useEffect(() => {
-    axios.post('/auth/refresh', {}, { withCredentials: true })
-      .then(response => {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${response.data}`;
-        setAuthenticated(true);
-      })
-      .catch(error => {
-        console.log('Could not refresh token');
-      });
-
-  }, []);
-
   const themeSettings = defaultTheme(isDarkMode ? 'dark' : 'light');
   const theme = createTheme(themeSettings);
 
@@ -40,12 +32,28 @@ function App() {
       <BrowserRouter>
         <MyLayout>
           <Routes>
-            <Route exact path="/" element={<Departments />} />
-            <Route path="/create" element={<Create />} />
+            {/* Public routes */}
+            <Route path="/login" element={<Login />} />
+            <Route exact path="/unauthorized" element={<Unauthorized />} />
+
+            {/* Protected routes */}
+            <Route element={<PersistLogin />}>
+              <Route element={<RequireAuth allowedRoles={[ROLES.Departments]} />}>
+                <Route exact path="/" element={<Departments />} />
+              </Route>
+
+              <Route element={<RequireAuth />}>
+                <Route path="/create" element={<Create />} />
+              </Route>
+            </Route>
+            
+            {/* Catch all */}
+            <Route path="*" element={<PageNotFound />} />
+            
           </Routes>
         </MyLayout>
       </BrowserRouter>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }
 

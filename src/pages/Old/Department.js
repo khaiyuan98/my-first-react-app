@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from "../../api/axios";
-
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export const Department = () => {
+    const axios = useAxiosPrivate();
+
     const [isLoading, setIsLoading] = useState(false);
     const [departments, setDepartments] = useState([]);
     const [modalTitle, setModalTitle] = useState('');

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import moment from 'moment';
-import axios from "../../api/axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export const Employee = () => {
+    const axios = useAxiosPrivate();
 
     const [employees, setEmployees] = useState([]);
     const [departments, setDepartments] = useState([]);

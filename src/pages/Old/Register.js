@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import axios from '../../api/axios';
 import {Navigate} from 'react-router-dom';
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export const Register = () => {
+    const axios = useAxiosPrivate();
+
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');

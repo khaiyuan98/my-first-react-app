@@ -1,9 +1,11 @@
 import { Container, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import axios from "../api/axios";
 import { DepartmentCard } from "../components/DepartmentCard";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 export const Departments = () => {
+    const axios = useAxiosPrivate();
+
     const [departments, setDepartments] = useState([]);
 
     useEffect(() => {

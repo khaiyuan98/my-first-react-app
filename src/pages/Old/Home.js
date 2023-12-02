@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import axios from "../../api/axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export const Home = () => {
-    const [user, setUser] = useState(null);
+    const axios = useAxiosPrivate();
 
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         axios.get('/auth/user').then(() => {
