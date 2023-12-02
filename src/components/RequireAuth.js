@@ -9,11 +9,11 @@ const RequireAuth = ({ allowedRoles }) => {
     const location = useLocation();
 
     return (
-        allowedRoles == undefined || allowedRoles.length <= 0 || auth?.roles?.find(role => allowedRoles?.includes(role))
+        !auth?.AccessToken 
+        ? <Navigate to="/login" state={{from: location}} replace/>
+        : allowedRoles == undefined || allowedRoles.length <= 0 || auth?.roles?.find(role => allowedRoles?.includes(role))
         ? <Outlet />
-        : auth?.AccessToken
-        ? <Navigate to="/unauthorized" state={{from: location}} replace/>
-        : <Navigate to="/login" state={{from: location}} replace/>
+        : <Navigate to="/unauthorized" state={{from: location}} replace/>
     );
 };
 
