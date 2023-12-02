@@ -30,10 +30,10 @@ function App() {
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
       <BrowserRouter>
-        <Route path="/login" element={<Login />} />
         <MyLayout>
           <Routes>
             {/* Public routes */}
+            <Route path="/login" element={<Login />} />
             <Route exact path="/unauthorized" element={<Unauthorized />} />
 
             {/* Protected routes */}
