@@ -1,7 +1,7 @@
 // https://www.youtube.com/watch?v=oUZjO00NkhY
 
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 
 const RequireAuth = ({ allowedRoles }) => {

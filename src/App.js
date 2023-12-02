@@ -8,9 +8,9 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { MyLayout } from './components/Layouts/MyLayout';
 import { useSelector } from 'react-redux';
 import { Unauthorized } from './pages/ErrorPages/Unauthorized';
-import RequireAuth from './components/RequireAuth';
+import RequireAuth from './components/Auth/RequireAuth';
 import { Login } from './pages/Login';
-import PersistLogin from './components/PersistLogin';
+import PersistLogin from './components/Auth/PersistLogin';
 import { PageNotFound } from './pages/ErrorPages/PageNotFound';
 
 
@@ -30,6 +30,7 @@ function App() {
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
       <BrowserRouter>
+        
         <MyLayout>
           <Routes>
             {/* Public routes */}
