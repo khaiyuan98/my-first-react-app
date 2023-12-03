@@ -9,9 +9,10 @@ import { MyLayout } from './components/Layouts/MyLayout';
 import { useSelector } from 'react-redux';
 import { Unauthorized } from './pages/ErrorPages/Unauthorized';
 import RequireAuth from './components/Auth/RequireAuth';
-import { Login } from './pages/Login';
+import { LoginPage } from './pages/LoginPage';
 import PersistLogin from './components/Auth/PersistLogin';
 import { PageNotFound } from './pages/ErrorPages/PageNotFound';
+import RequireRole from './components/Auth/RequireRole';
 
 
 function App() {
@@ -30,29 +31,29 @@ function App() {
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
       <BrowserRouter>
-        
-        <MyLayout>
-          <Routes>
-            {/* Public routes */}
-            <Route path="/login" element={<Login />} />
-            <Route exact path="/unauthorized" element={<Unauthorized />} />
+        <Routes>
+          {/* Public routes */}
+          <Route path="/login" element={<LoginPage />} />
 
+          <Route element={<PersistLogin />}>
             {/* Protected routes */}
-            <Route element={<PersistLogin />}>
-              <Route element={<RequireAuth allowedRoles={[ROLES.Departments]} />}>
-                <Route exact path="/" element={<Departments />} />
-              </Route>
-
-              <Route element={<RequireAuth />}>
+            <Route element={<RequireAuth />}>
+              <Route element={<MyLayout />}>
                 <Route path="/create" element={<Create />} />
+                <Route exact path="/" element={<Departments />} />
+
+                <Route element={<RequireRole allowedRoles={[ROLES.Departments]} />}>
+                  {/* <Route exact path="/" element={<Departments />} /> */}
+                </Route>
               </Route>
+
+              {/* Error Pages */}
+              <Route exact path="/unauthorized" element={<Unauthorized />} />
+              {/* Catch all */}
+              <Route path="*" element={<PageNotFound />} />
             </Route>
-
-            {/* Catch all */}
-            <Route path="*" element={<PageNotFound />} />
-
-          </Routes>
-        </MyLayout>
+          </Route>
+        </Routes>
       </BrowserRouter>
     </ThemeProvider >
   );

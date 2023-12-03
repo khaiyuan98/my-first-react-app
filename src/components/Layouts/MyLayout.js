@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { MyAppBar } from "./MyAppBar";
 import { MyDrawer } from "./MyDrawer";
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -25,7 +26,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 
-export const MyLayout = ({ children}) => {
+export const MyLayout = () => {
     const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
     const [drawerIsOpen, setDrawerOpen] = useState(true);
 
@@ -37,7 +38,7 @@ export const MyLayout = ({ children}) => {
 
             <Main open={drawerIsOpen}>
                 <Offset />
-                {children}  
+                <Outlet />  
             </Main>
         </div>
     )

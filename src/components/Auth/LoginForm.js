@@ -77,7 +77,7 @@ export const LoginForm = () => {
     }, [persist]);
 
     return (
-        <Box>
+        <>
             <Paper
                 elevation={1}
                 sx={{
@@ -138,7 +138,7 @@ export const LoginForm = () => {
                     </Button>
                 </Box>
             </Paper>
-        </Box>
+        </>
     )
 
 }

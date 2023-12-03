@@ -1,8 +1,8 @@
 // https://www.youtube.com/watch?v=OUP-urBy1k4&list=PLlameCF3cMEtY5S-9aVlCobcfDdbmpjPa&index=2
 import { Box } from '@mui/material';
-import { LoginForm } from './../components/Auth/LoginForm';
+import { LoginForm } from '../components/Auth/LoginForm';
 
-export const Login = () => {
+export const LoginPage = () => {
     return (
         <Box
             sx={{
