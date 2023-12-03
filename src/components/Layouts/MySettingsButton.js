@@ -41,33 +41,18 @@ export const MySettingsButton = () => {
         localStorage.setItem('dark-mode', event.target.checked);
     };
 
-    const stringToColor = (string) => {
-        let hash = 0;
-        let i;
+    const stringAvatar = (firstName = 'A', lastName = 'U') => {
+        
+        if (firstName == null || firstName.length <= 0)
+            firstName = 'Anonymous';
 
-        /* eslint-disable no-bitwise */
-        for (i = 0; i < string.length; i += 1) {
-            hash = string.charCodeAt(i) + ((hash << 5) - hash);
-        }
+        if (lastName == null || lastName.length <= 0)
+            lastName = 'User';
 
-        let color = '#';
+        firstName = firstName.toUpperCase();
+        lastName = lastName.toUpperCase();
 
-        for (i = 0; i < 3; i += 1) {
-            const value = (hash >> (i * 8)) & 0xff;
-            color += `00${value.toString(16)}`.slice(-2);
-        }
-        /* eslint-enable no-bitwise */
-
-        return color;
-    }
-
-    const stringAvatar = (firstName = 'J', lastName = 'M') => {
-        return {
-            sx: {
-                bgcolor: stringToColor(firstName + ' ' + lastName),
-            },
-            children: `${firstName[0] + lastName[0]}`,
-        };
+        return `${firstName[0] + lastName[0]}`;
     }
 
     return (
@@ -79,7 +64,7 @@ export const MySettingsButton = () => {
                 edge="start"
                 onClick={(event) => { handleOpen(event) }}
             >
-                <Avatar {...stringAvatar(auth?.FirstName, auth?.LastName)} />
+                <Avatar>{stringAvatar(auth?.FirstName, auth?.LastName)}</Avatar>
             </IconButton>
             <Menu
                 id="basic-menu"

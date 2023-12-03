@@ -13,6 +13,7 @@ import { LoginPage } from './pages/LoginPage';
 import PersistLogin from './components/Auth/PersistLogin';
 import { PageNotFound } from './pages/ErrorPages/PageNotFound';
 import RequireRole from './components/Auth/RequireRole';
+import { UsersPage } from './pages/Admin/UsersPage';
 
 
 function App() {
@@ -39,8 +40,9 @@ function App() {
             {/* Protected routes */}
             <Route element={<RequireAuth />}>
               <Route element={<MyLayout />}>
-                <Route path="/create" element={<Create />} />
                 <Route exact path="/" element={<Departments />} />
+                <Route path="/create" element={<Create />} />
+                <Route path="/users" element={<UsersPage />} />
 
                 <Route element={<RequireRole allowedRoles={[ROLES.Departments]} />}>
                   {/* <Route exact path="/" element={<Departments />} /> */}
@@ -49,6 +51,7 @@ function App() {
 
               {/* Error Pages */}
               <Route exact path="/unauthorized" element={<Unauthorized />} />
+
               {/* Catch all */}
               <Route path="*" element={<PageNotFound />} />
             </Route>

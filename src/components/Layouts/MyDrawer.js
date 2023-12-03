@@ -1,23 +1,42 @@
 import { AddCircleOutline, SubjectOutlined } from "@mui/icons-material";
-import { Box, Divider, Drawer, List, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from "@mui/material"
+import { Box, Divider, Drawer, List, Toolbar, Typography } from "@mui/material"
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useLocation, useNavigate } from "react-router-dom";
+import { NestedDrawerItem } from "./NestedDrawerItem";
+import { BasicDrawerItem } from "./BasicDrawerItem";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import PeopleIcon from '@mui/icons-material/People';
 
 export const MyDrawer = ({ drawerWidth = 240, drawerIsOpen = true }) => {
-    const [activeMenuItem, setActiveMenuItem] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const [activeMenuItem, setActiveMenuItem] = useState(location.pathname);
 
     const menuItems = [
         {
+            type: 'Basic',
             text: 'My Notes',
             icon: <SubjectOutlined color="secondary" />,
             path: '/'
         },
         {
+            type: 'Basic',
             text: 'Create Note',
             icon: <AddCircleOutline color="secondary" />,
             path: '/create'
+        },
+        {
+            type: 'Nested',
+            text: 'Administrator',
+            icon: <AdminPanelSettingsIcon color="secondary" />,
+            children: [
+                {
+                    text: 'Users',
+                    icon: <PeopleIcon color="secondary" />,
+                    path: '/users',
+                }
+            ]
         }
     ]
 
@@ -42,7 +61,7 @@ export const MyDrawer = ({ drawerWidth = 240, drawerIsOpen = true }) => {
             <Toolbar />
             <Box>
                 <Typography variant="h5">
-                     Drawer
+                    Drawer
                 </Typography>
                 <Divider />
             </Box>
@@ -51,16 +70,22 @@ export const MyDrawer = ({ drawerWidth = 240, drawerIsOpen = true }) => {
             <List>
                 {menuItems.map(item =>
                     <div key={item.text}>
-                        <ListItemButton
-                            onClick={() => handleMenuItemClick(item)}
-                            selected={item.path === activeMenuItem}
-                        >
-                            <ListItemIcon>{item.icon}</ListItemIcon>
-                            <ListItemText primary={item.text} />
-                        </ListItemButton>
+                        {item.type == 'Nested'
+                            ? <NestedDrawerItem
+                                item={item}
+                                handleMenuItemClick={handleMenuItemClick}
+                                activeMenuItem={activeMenuItem}
+                            />
+                            : <BasicDrawerItem
+                                item={item}
+                                handleMenuItemClick={handleMenuItemClick}
+                                activeMenuItem={activeMenuItem}
+                            />
+                        }
                         <Divider />
                     </div>
                 )}
+
             </List>
         </Drawer>
     )

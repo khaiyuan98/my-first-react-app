@@ -18,11 +18,7 @@ export const useRefreshToken = () => {
                 withCredentials: true
             });
 
-            setAuth(prev => {
-                console.log(`PREV: ${JSON.stringify(prev)}`);
-                console.log(`RESPONSE: ${JSON.stringify(response.data)}`);
-                return response.data;
-            });
+            setAuth(response.data);
 
             return response.data;
         }
