@@ -14,6 +14,7 @@ import PersistLogin from './components/Auth/PersistLogin';
 import { PageNotFound } from './pages/ErrorPages/PageNotFound';
 import RequireRole from './components/Auth/RequireRole';
 import { UsersPage } from './pages/Admin/UsersPage';
+import { MyFooter } from './components/Layouts/MyFooter';
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
             </Route>
           </Route>
         </Routes>
+        <MyFooter />
       </BrowserRouter>
     </ThemeProvider >
   );
