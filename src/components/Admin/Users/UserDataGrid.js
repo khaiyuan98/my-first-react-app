@@ -9,31 +9,41 @@ const columns = [
   {
     field: 'UserId',
     headerName: 'ID',
-    width: 90,
     editable: false,
   },
   {
     field: 'Username',
     headerName: 'Username',
-    width: 150,
     editable: false,
   },
   {
     field: 'FirstName',
     headerName: 'First name',
-    width: 150,
     editable: false,
   },
   {
     field: 'LastName',
     headerName: 'Last name',
-    width: 150,
     editable: false,
   },
   {
     field: 'Role',
     headerName: 'Role',
-    width: 110,
+    editable: false,
+  },
+  {
+    field: 'LastLoginDate',
+    headerName: 'Last Login',
+    editable: false,
+  },
+  {
+    field: 'LastUpdated',
+    headerName: 'Last Updated',
+    editable: false,
+  },
+  {
+    field: 'LastUpdatedBy',
+    headerName: 'Updated By',
     editable: false,
   },
   {
@@ -41,7 +51,6 @@ const columns = [
     headerName: 'Full name',
     description: 'This column has a value getter and is not sortable.',
     sortable: false,
-    width: 160,
     valueGetter: (params) =>
       `${params.row.FirstName || ''} ${params.row.LastName || ''}`,
   },
@@ -58,6 +67,7 @@ const UserDataGrid = () => {
       .then((response) => {
         setRows(response.data);
         setIsLoading(false);
+        console.log(response.data)
       })
       .catch(error => {
 
