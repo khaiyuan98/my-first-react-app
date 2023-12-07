@@ -1,7 +1,12 @@
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
+import moment from 'moment/moment';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Paper } from '@mui/material';
 
 const GET_USERS_URL = '/user';
 
@@ -9,50 +14,94 @@ const columns = [
   {
     field: 'UserId',
     headerName: 'ID',
+    width: 0.5,
     editable: false,
   },
   {
     field: 'Username',
     headerName: 'Username',
+    flex: 0.2,
     editable: false,
   },
   {
     field: 'FirstName',
     headerName: 'First name',
+    flex: 0.2,
     editable: false,
   },
   {
     field: 'LastName',
     headerName: 'Last name',
+    flex: 0.2,
     editable: false,
   },
   {
-    field: 'Role',
+    field: 'RoleName',
     headerName: 'Role',
+    flex: 0.2,
     editable: false,
+  },
+  {
+    field: 'UserGroups',
+    headerName: 'Groups',
+    flex: 0.2,
+    editable: false,
+    renderCell: (params) =>
+      <div>
+        {params.value.map(item =>
+          <div>
+            {item}
+          </div>
+        )}
+      </div>
   },
   {
     field: 'LastLoginDate',
     headerName: 'Last Login',
+    flex: 0.2,
     editable: false,
+    valueFormatter: params => {
+      return params.value != null ? moment(params?.value).format("DD/MM/YYYY hh:mm A") : '-'
+    },
   },
   {
     field: 'LastUpdated',
     headerName: 'Last Updated',
+    flex: 0.2,
     editable: false,
+    valueFormatter: params => {
+      return params.value != null ? moment(params?.value).format("DD/MM/YYYY hh:mm A") : '-'
+    },
   },
   {
     field: 'LastUpdatedBy',
     headerName: 'Updated By',
+    flex: 0.2,
     editable: false,
   },
   {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    valueGetter: (params) =>
-      `${params.row.FirstName || ''} ${params.row.LastName || ''}`,
+    field: 'actions',
+    headerName: 'Actions',
+    type: 'actions',
+    getActions: (params) => [
+      <GridActionsCellItem
+        icon={<VisibilityIcon />}
+        label="Duplicate User"
+        onClick={() => { console.log(params) }}
+      />,
+      <GridActionsCellItem
+        icon={<ModeEditIcon />}
+        label="Edit"
+        onClick={() => { }}
+        showInMenu
+      />,
+      <GridActionsCellItem
+        icon={<DeleteIcon />}
+        label="Delete"
+        onClick={() => { }}
+        showInMenu
+      />,
+    ],
   },
 ];
 
@@ -67,7 +116,6 @@ const UserDataGrid = () => {
       .then((response) => {
         setRows(response.data);
         setIsLoading(false);
-        console.log(response.data)
       })
       .catch(error => {
 
@@ -77,23 +125,25 @@ const UserDataGrid = () => {
 
   return (
     isLoading ? 'Loading...'
-      : <Box sx={{ height: 400, width: '100%' }}>
+      : <Paper sx={{ minHeight: 500, width: '100%' }}>
         <DataGrid
+          sx={{ minHeight: 'inherit' }}
+          density='comfortable'
+          getRowHeight={() => 'auto'}
+          autoPageSize={true}
           getRowId={(row) => row.UserId}
           rows={rows}
           columns={columns}
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 5,
+                pageSize: 15,
               },
             },
           }}
-          pageSizeOptions={[5]}
-          checkboxSelection
-          disableRowSelectionOnClick
+          disableRowSelectionOnClick={true}
         />
-      </Box>
+      </Paper>
   );
 }
 
